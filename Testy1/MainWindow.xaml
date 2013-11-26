@@ -3,6 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto" MinWidth="111"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="lst_Data" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" >
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="LastName" Width="70" DisplayMemberBinding="{Binding LastName}"/>
+                    <GridViewColumn Header="FirstName" Width="50" DisplayMemberBinding="{Binding FirstName}"/>
+                    <GridViewColumn Header="HireDate" Width="200" DisplayMemberBinding="{Binding HireDate}"/>
+                    <GridViewColumn Header="EnrollmentDate" Width="200" DisplayMemberBinding="{Binding EnrollmentDate}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button x:Name="btn_GetData" Content="Get data SQL" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Top" Width="100" Click="btn_GetData_Click" Grid.Column="1" Height="22"/>
+        <Button x:Name="btn_GetData_Insight" Content="Get data Insight" HorizontalAlignment="Left" Margin="5,35,0,0" VerticalAlignment="Top" Width="100" Click="btn_GetData_Insight_Click" Grid.Column="1" Height="22" />
+
     </Grid>
 </Window>

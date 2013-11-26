@@ -1,20 +1,14 @@
 ﻿
+using System;
 namespace Testy1.Models
 {
-   public abstract class Person
+   public class Person
    {
-      public int PersonID { get; set; }
+       public int PersonID { get; set; }
 
-      public string LastName { get; set; }
-
-      public string FirstMidName { get; set; }
-
-      public string FullName
-      {
-         get
-         {
-            return LastName + ", " + FirstMidName;
-         }
-      }
+       public string LastName { get; set; }
+       public string FirstName { get; set; }
+       public DateTime HireDate { get; set; }
+       public DateTime EnrollmentDate { get; set; }
    }
 }

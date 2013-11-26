@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>EFCodeFirst.Sample</id>
+    <version>0.8</version>
+    <title>EFCodeFirst.Sample</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This sample blog model demonstrates the use of the Entity Framework Feature CTP5 Code First support</description>
+    <summary>This sample blog model demonstrates the use of the Entity Framework Feature CTP5 Code First support</summary>
+    <dependencies>
+      <dependency id="EFCodeFirst" version="0.8" />
+    </dependencies>
+  </metadata>
+</package>
