@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 namespace Testy1.Models
 {
    public class Person
@@ -10,5 +11,8 @@ namespace Testy1.Models
        public string FirstName { get; set; }
        public DateTime HireDate { get; set; }
        public DateTime EnrollmentDate { get; set; }
+
+       public virtual ICollection<Enrollment> Enrollments { get; set; }
+
    }
 }

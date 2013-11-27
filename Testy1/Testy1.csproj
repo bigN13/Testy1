@@ -85,6 +85,7 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="SQLException.cs" />
     <Compile Include="Startup.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

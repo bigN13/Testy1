@@ -4,7 +4,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Data.SqlServerCe;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,7 +37,10 @@ namespace Testy1
         public MainWindow()
         {
             InitializeComponent();
-            myConn = "Server = DIMITRIS-PC" + "; Database = School; Trusted_Connection = True;";
+
+            myConn = (txt_Connection.Text !="") ? txt_Connection.Text:"Server = DIMITRIS-PC" + "; Database = School; Trusted_Connection = True;";
+
+           
 
             //Database.SetInitializer<SchoolContext>(new SchoolInitializer());
             //SchoolContext context = new SchoolContext();
@@ -78,7 +84,7 @@ namespace Testy1
                             //i++;
                         }
 
-                        lst_Data.ItemsSource = beers;
+                        lst_Persons.ItemsSource = beers;
 
                         myConnection.Close();
                     }
@@ -98,10 +104,67 @@ namespace Testy1
             // run a query right off the connection (this performs an auto-open/close)
             database.Connection().QuerySql("SELECT * FROM Person", Parameters.Empty);
 
-            IList<Person> beers = database.Connection().QuerySql<Person>("SELECT * FROM Person");
+            IList<Enrollment> personscourses = database.Connection().QuerySql<Enrollment>("SELECT * FROM CourseInstructor");
+
+            IList<Person> persons = database.Connection().QuerySql<Person>("SELECT * FROM Person");
+
+
+
+            IList<Course> courses = database.Connection().QuerySql<Course>("SELECT * FROM Course");
 
             //List<Person> beers = new List<Person>();
-            lst_Data.ItemsSource = beers;   
+            lst_Persons.ItemsSource = persons;
+
+            lst_Courses.ItemsSource = courses;   
+        }
+
+        private void btn_Insight_Count_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnectionStringBuilder database = new SqlConnectionStringBuilder(myConn);
+
+            int count2 = database.Connection().ExecuteScalarSql<int>("SELECT COUNT(*) FROM Person");
+
+            MessageBox.Show(count2.ToString());
+
+        }
+
+        private void btn_SQLCE_Click(object sender, RoutedEventArgs e)
+        {
+            /* get the Path */
+            var directoryName = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var fileName = System.IO.Path.Combine(directoryName, "Foo2Database.sdf");
+
+            /* check if exists */
+            if (File.Exists(fileName))
+                File.Delete(fileName);
+
+            string connStr = @"Data Source = " + fileName;
+
+            /* create Database */
+            SqlCeEngine engine = new SqlCeEngine(connStr);
+            engine.CreateDatabase();
+
+            /* create table and columns */
+            using (SqlCeConnection conn = new SqlCeConnection(connStr))
+            {
+                using (SqlCeCommand cmd = new SqlCeCommand(@"CREATE TABLE FooTable (Foo_ID int, FooData NVARCHAR(200))", conn))
+                {
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+
+                }
+            }
         }
     }
 }
